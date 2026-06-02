@@ -19,7 +19,7 @@ export default function Navbar() {
       <Magnetic intensity={0.2}>
         <div className="logo" data-cursor="hover">
           {/* REPLACE the text span with an img tag */}
-          <img src="src/assets/images/logo/logo.png" alt="Stelle Tours & Forex" className="brand-logo" />
+          <img src="public/images/logo/logo.png" alt="Stelle Tours & Forex" className="brand-logo" />
         </div>
       </Magnetic>
 
