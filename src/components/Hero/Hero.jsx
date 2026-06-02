@@ -10,9 +10,9 @@ export default function Hero() {
   const images = [
   '/images/hero/1.jpg',
   '/images/hero/2.jpg',
-  '/images/hero/3.jpg',
-  '/images/hero/4.jpg',
-  '/images/hero/5.jpg',
+  '/images/hero/3.JPG',
+  '/images/hero/4.JPG',
+  '/images/hero/5.JPG',
   ];
 
   useEffect(() => {
