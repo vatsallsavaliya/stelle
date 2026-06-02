@@ -8,11 +8,11 @@ export default function Hero() {
   
   // High-end placeholder images (Travel + Global Finance/Cities)
   const images = [
-  'public/images/hero/1.jpg',
-  'public/images/hero/2.jpg',
-  'public/images/hero/3.jpg',
-  'public/images/hero/4.jpg',
-  'public/images/hero/5.jpg',
+  '/images/hero/1.jpg',
+  '/images/hero/2.jpg',
+  '/images/hero/3.jpg',
+  '/images/hero/4.jpg',
+  '/images/hero/5.jpg',
   ];
 
   useEffect(() => {
