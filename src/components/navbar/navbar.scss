@@ -1,0 +1,113 @@
+.navbar {
+    position: fixed; /* Makes the navbar float */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays above your scrolling content */
+
+    background-color: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
+  backdrop-filter: blur(12px); /* The Perspective.design blur */
+  -webkit-backdrop-filter: blur(12px); /* For Safari compatibility */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Optional: A very subtle line to ground the navbar */
+
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 4rem;
+    background-color: transparent;
+  
+    .logo {
+        padding:0 1rem; 
+        display: flex; /* Changed to flex to align the image perfectly */
+        align-items: center;
+        position: relative;
+        .brand-logo {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            transform: translateZ(0);;
+          }
+        }
+  
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+  
+      li {
+        position: relative; // Crucial anchor for the absolute dropdown
+      }
+  
+      .nav-item {
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 1rem 1.5rem; 
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        transform: translateZ(0); 
+        will-change: transform;
+  
+        .dropdown-arrow {
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+      }
+  
+      /* --- Dropdown Specific Styles --- */
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(15px);
+        background-color: #ffffff; 
+        min-width: 240px;
+        padding: 0.5rem;
+        border-radius: 16px;
+        
+        // A soft, premium shadow
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); 
+        
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        list-style: none;
+        z-index: 100;
+        
+        li {
+          width: 100%;
+        }
+  
+        .dropdown-item {
+          padding: 0.8rem 1.2rem;
+          font-size: 1rem;
+          font-weight: 500;
+          border-radius: 12px;
+          transition: background-color 0.2s ease, transform 0.2s ease;
+          display: block;
+          
+          &:hover {
+            background-color: #f5f5f5;
+            // Slight physical indent on hover for the sub-items
+            transform: translateX(4px); 
+          }
+        }
+      }
+  
+      /* --- Hover Interactions --- */
+      li.has-dropdown:hover {
+        .dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(0); // Slides up into place
+        }
+        
+        .dropdown-arrow {
+          transform: rotate(180deg); // Flips the arrow
+        }
+      }
+    }
+  }
