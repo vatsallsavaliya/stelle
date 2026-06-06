@@ -1,58 +1,61 @@
-import React from 'react';
-import Magnetic from '../Magnetic/Magnetic';
-import './navbar.scss';
+import React, { useState, useEffect } from 'react';
+import './Navbar.scss';
 
-export default function Navbar() {
-  const navItems = [
-    { title: 'Home' },
-    { title: 'Company' },
-    { 
-      title: 'Packages', 
-      dropdown: ['Domestic tours', 'International Tours', 'Customized Tours'] 
-    },
-    { title: 'Visa & Passport' },
-    { title: 'Contact Us' }
-  ];
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // If the user scrolls down more than 50px, trigger the glass effect
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="navbar">
-      <Magnetic intensity={0.2}>
-        <div className="logo" data-cursor="hover">
-          {/* REPLACE the text span with an img tag */}
-          <img src="/images/logo/logo.png" alt="Stelle Tours & Forex" className="brand-logo" />
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <div className="nav-container">
+        {/* Logo Section */}
+        <div className="logo-wrapper">
+          <img src="/images/logo/logo.png" alt="Stelle Logo" className="logo" />
         </div>
-      </Magnetic>
 
-      <ul className="nav-links">
-        {navItems.map((item, index) => (
-          <li key={index} className={item.dropdown ? 'has-dropdown' : ''}>
+        {/* Links Section */}
+{/* Links Section */}
+<div className="nav-links">
+          <a href="#home" className="nav-link">Home</a>
+          <a href="#company" className="nav-link">Company</a>
+          
+          {/* Dropdown Container */}
+          <div className="nav-link dropdown">
+            <span className="dropdown-trigger">
+              Packages 
+              <svg className="chevron" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
             
-            <Magnetic intensity={0.4}>
-              <div className="nav-item" data-cursor="hover">
-                <span>{item.title}</span>
-                {item.dropdown && (
-                  <svg className="dropdown-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                )}
-              </div>
-            </Magnetic>
+            <div className="dropdown-menu">
+              <a href="#domestic" className="dropdown-item">Domestic Tours</a>
+              <a href="#international" className="dropdown-item">International Tours</a>
+              <a href="#customized" className="dropdown-item">Customized Tours</a>
+            </div>
+          </div>
 
-            {item.dropdown && (
-              <ul className="dropdown-menu">
-                {item.dropdown.map((subItem, subIndex) => (
-                  <li key={subIndex}>
-                    <div className="dropdown-item" data-cursor="hover">
-                      <span>{subItem}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-            
-          </li>
-        ))}
-      </ul>
+          <a href="#visa" className="nav-link">Visa & Passport</a>
+          <a href="#contact" className="nav-link">Contact Us</a>
+        </div>
+      </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

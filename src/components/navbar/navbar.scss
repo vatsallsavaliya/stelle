@@ -1,113 +1,150 @@
 .navbar {
-    position: fixed; /* Makes the navbar float */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Ensures it stays above your scrolling content */
-
-    background-color: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
-  backdrop-filter: blur(12px); /* The Perspective.design blur */
-  -webkit-backdrop-filter: blur(12px); /* For Safari compatibility */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Optional: A very subtle line to ground the navbar */
-
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 0; /* --- THINNER: Reduced from 1.5rem --- */
+  z-index: 100;
+  transition: all 0.4s ease-in-out;
   
+  /* --- TRUE GLASSMORPHISM --- */
+  background: rgba(255, 255, 255, 0.70); /* Much more transparent */
+  backdrop-filter: blur(24px) saturate(180%); /* Stronger blur creates the "frost" */
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8); /* Crisp, premium bottom edge */
+
+  /* Scrolled State */
+  &.scrolled {
+    padding: 0.2rem 0; /* Shrinks even more when scrolling */
+    background: rgba(255, 255, 255, 0.90); /* Gets slightly more solid for readability */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.2rem 4rem;
-    background-color: transparent;
-  
+  }
+
+  .logo-wrapper {
     .logo {
-        padding:0 1rem; 
-        display: flex; /* Changed to flex to align the image perfectly */
-        align-items: center;
-        position: relative;
-        .brand-logo {
-            height: 100px;
-            width: auto;
-            object-fit: contain;
-            transform: translateZ(0);;
-          }
-        }
-  
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-      align-items: center;
-  
-      li {
-        position: relative; // Crucial anchor for the absolute dropdown
+      height: 80px; /* --- THINNER: Reduced from 60px so it doesn't stretch the navbar --- */
+      max-width: 250px;
+      object-fit: contain;
+      transition: all 0.3s ease;
+    }
+  } 
+
+  .nav-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+
+    .nav-link {
+      position: relative;
+      color: #000000; /* --- NEW: Crisp Black Text --- */
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+
+      /* Premium Underline Hover Animation */
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        width: 100%;
+        height: 2px; /* Slightly thicker for better contrast */
+        background-color: #000000; /* --- NEW: Black Underline --- */
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
       }
-  
-      .nav-item {
-        font-size: 1.1rem;
-        font-weight: 500;
-        padding: 1rem 1.5rem; 
-        border-radius: 50px;
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+
+    /* --- NEW: Light Dropdown Styles --- */
+    .dropdown {
+      position: relative;
+      cursor: pointer;
+
+      .dropdown-trigger {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        position: relative;
-        transform: translateZ(0); 
-        will-change: transform;
-  
-        .dropdown-arrow {
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        gap: 6px;
       }
-  
-      /* --- Dropdown Specific Styles --- */
+
+      .chevron {
+        transition: transform 0.3s ease;
+      }
+
       .dropdown-menu {
         position: absolute;
         top: 100%;
         left: 50%;
         transform: translateX(-50%) translateY(15px);
-        background-color: #ffffff; 
-        min-width: 240px;
-        padding: 0.5rem;
-        border-radius: 16px;
+        margin-top: 1.5rem;
+        min-width: 220px;
         
-        // A soft, premium shadow
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); 
+        /* Light Glass Dropdown Panel */
+        background: rgba(255, 255, 255, 0.9); 
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        padding: 0.5rem 0;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         
         opacity: 0;
         visibility: hidden;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        list-style: none;
-        z-index: 100;
-        
-        li {
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: -1.5rem;
+          left: 0;
           width: 100%;
+          height: 1.5rem;
         }
-  
+
         .dropdown-item {
-          padding: 0.8rem 1.2rem;
-          font-size: 1rem;
-          font-weight: 500;
-          border-radius: 12px;
-          transition: background-color 0.2s ease, transform 0.2s ease;
           display: block;
-          
+          padding: 0.8rem 1.5rem;
+          color: #444444; /* Dark gray for a softer look */
+          text-decoration: none;
+          font-size: 0.95rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+
           &:hover {
-            background-color: #f5f5f5;
-            // Slight physical indent on hover for the sub-items
-            transform: translateX(4px); 
+            color: #000000;
+            background: rgba(0, 0, 0, 0.04); /* Very subtle gray highlight */
+            padding-left: 1.8rem; 
           }
         }
       }
-  
-      /* --- Hover Interactions --- */
-      li.has-dropdown:hover {
+
+      &:hover {
+        .chevron {
+          transform: rotate(180deg);
+        }
+
         .dropdown-menu {
           opacity: 1;
           visibility: visible;
-          transform: translateX(-50%) translateY(0); // Slides up into place
-        }
-        
-        .dropdown-arrow {
-          transform: rotate(180deg); // Flips the arrow
+          transform: translateX(-50%) translateY(0);
         }
       }
     }
   }
+}

@@ -1,113 +1,134 @@
-.hero-section {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: #fcfcfd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; 
-  
-    .hero-text {
-      z-index: 10; 
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      
-      h1 {
-        font-size: clamp(3rem, 8vw, 7rem);
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
-        color: #000000;
-        margin: 0;
-        text-transform: uppercase;
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-      }
-  
-      .offset-text {
-        color: #000000; 
-        margin-left: 10vw; 
-      }
-      
-      .hero-cta {
-        margin-top: 10vh; 
-        
-        .cta-button {
-            position: relative; /* Required to contain the rising background */
-            overflow: hidden; /* Clips the background to stay inside the pill shape */
-            
-            background-color: #ffffff; 
-            color: #000000; 
-            border: 1px solid rgba(0, 0, 0, 0.15); 
-            padding: 1.2rem 3rem;
-            border-radius: 50px; 
-            font-size: 1.1rem;
-            font-weight: 600;
-            
-            display: inline-block;
-            transition: border-color 0.4s ease;
-            transform: translateZ(0);
-            will-change: transform;
-            
-            /* --- THE NEW RISING LIQUID EFFECT --- */
-            &::before {
-              content: "";
-              position: absolute;
-              top: 100%; /* Starts hidden just below the button */
-              left: 0;
-              width: 100%;
-              height: 100%;
-              background-color: #000000;
-              
-              /* Creates the curved "wave" at the top edge */
-              border-radius: 50% 50% 0 0; 
-              
-              /* cubic-bezier gives it that buttery-smooth premium easing */
-              transition: top 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-                          border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-              z-index: 0;
-            }
-            
-            &:hover {
-              border-color: #000000; 
-              
-              &::before {
-                top: 0; /* Pulls the black shape all the way up */
-                border-radius: 0; /* Flattens the curve perfectly into the button edges */
-              }
-              
-              span {
-                color: #ffffff; /* Fades the text to pure white */
-              }
-            }
-    
-            span {
-              position: relative;
-              z-index: 1; /* Keeps the text floating above the black background */
-              display: inline-block;
-              pointer-events: none; 
-              
-              /* Matches the speed of the background rising */
-              transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
-            }
-          }
-      }
-    } /* <--- FIX: This closing bracket MUST be here to close .hero-text */
-  
-    /* .trail-image is now safely outside .hero-text, but inside .hero-section */
-    .trail-image {
+/* Optional: Put this at the very top of your global CSS or index.css to load the premium font */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500&family=Montserrat:wght@400;500;700;800&display=swap');
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  /* --- VIDEO BACKGROUND STYLES --- */
+  .hero-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+    .background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .video-overlay {
       position: absolute;
       top: 0;
       left: 0;
-      width: 250px;
-      height: 350px;
-      object-fit: cover;
-      border-radius: 12px;
-      pointer-events: none; /* This being active again will fix the hover bug */
-      z-index: 5; 
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      will-change: transform, opacity;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 0.2) 0%, 
+        rgba(0, 0, 0, 0.6) 100%
+      ); 
     }
-  } /* Closes .hero-section */
+  }
+
+  /* --- CONTENT & TYPOGRAPHY STYLES --- */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem; /* Slightly more breathing room */
+
+    margin-top: 15vh; /* Adjust this number (e.g., 5vh to 15vh) until it sits exactly where you want it */
+    
+    h1 {
+      /* --- REDUCED FONT SIZE --- */
+      /* clamp(minimum_size, preferred_scaling, maximum_size) */
+      font-size: clamp(2.5rem, 5vw, 4.5rem); 
+      
+      line-height: 1.1;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 1.2rem; /* Slightly reduced the gap so the words don't drift too far apart */
+      
+      .slim-serif {
+        font-family: 'ivypresto-display', Didot, serif;
+        font-weight: 400; 
+        letter-spacing: 0.02em;
+      }
+
+      .bold-sans {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800; 
+        letter-spacing: -0.04em; 
+      }
+    }
+
+    /* --- PREMIUM PILL BUTTON STYLES --- */
+    .cta-button {
+      position: relative;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50px; /* Elegant pill shape */
+      padding: 1rem 2.5rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s ease;
+
+      span {
+        position: relative;
+        z-index: 2;
+        color: #ffffff;
+        
+        /* Crisp Sans-Serif Font for the button */
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.15em; /* Wide tracking for a luxury look */
+        transition: color 0.4s ease;
+      }
+
+      /* The smooth background fill hover effect */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1;
+      }
+
+      &:hover {
+        border-color: #ffffff;
+        
+        span {
+          color: #000000; /* Text turns black when background fills white */
+        }
+
+        &::before {
+          transform: translateY(0); /* Background slides up */
+        }
+      }
+    }
+  }
+}
