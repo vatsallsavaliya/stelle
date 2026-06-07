@@ -53,6 +53,18 @@
 
     margin-top: 15vh; /* Adjust this number (e.g., 5vh to 15vh) until it sits exactly where you want it */
     
+    /* --- ANIMATION TRIGGER STATE --- */
+    &.is-visible {
+      .word {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .hero-actions {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
     h1 {
       /* --- REDUCED FONT SIZE --- */
       /* clamp(minimum_size, preferred_scaling, maximum_size) */
@@ -66,6 +78,24 @@
       justify-content: center;
       column-gap: 1.2rem; /* Slightly reduced the gap so the words don't drift too far apart */
       
+      /* --- THE NEW MASK REVEAL STYLES --- */
+      .word-mask {
+        display: inline-flex;
+        overflow: hidden; /* This acts as the floor the text rises from */
+        padding-bottom: 0.15em; /* Prevents cutting off bottom-heavy letters like 'y' */
+      }
+
+      .word {
+        display: inline-block;
+        transform: translateY(120%); /* Starts hidden below the mask */
+        opacity: 0;
+        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease-out;
+      }
+
+      /* Staggers the animation so "Explore the" appears before "extraordinary" */
+      .word-mask:nth-child(1) .word { transition-delay: 0.1s; }
+      .word-mask:nth-child(2) .word { transition-delay: 0.3s; }
+
       .slim-serif {
         font-family: 'ivypresto-display', Didot, serif;
         font-weight: 400; 
@@ -77,6 +107,14 @@
         font-weight: 800; 
         letter-spacing: -0.04em; 
       }
+    }
+
+    /* --- NEW ACTION WRAPPER FOR BUTTON ANIMATION --- */
+    .hero-actions {
+      transform: translateY(30px);
+      opacity: 0;
+      /* Delays the button reveal until after the text finishes rising */
+      transition: all 1s cubic-bezier(0.19, 1, 0.22, 1) 0.6s; 
     }
 
     /* --- PREMIUM PILL BUTTON STYLES --- */

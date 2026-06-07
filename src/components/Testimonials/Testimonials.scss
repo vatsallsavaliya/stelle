@@ -1,0 +1,167 @@
+.testimonials-section {
+    padding: 5rem 5vw;
+    background-color: #fcfcfc; /* Very subtle off-white to make the white cards pop slightly */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    
+        .title {
+          font-family: 'ivypresto-display', serif;
+          font-size: clamp(2.5rem, 4vw, 3.5rem);
+          color: #111111;
+          margin-bottom: 1rem;
+        }
+    
+        .subtitle {
+          font-family: 'Montserrat', sans-serif;
+          color: #666666;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+      }
+    /* --- MARQUEE WRAPPER & FADE MASKS --- */
+    .marquee-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: 85vh; 
+      min-height: 700px;
+      overflow: hidden;
+      
+      /* THE NO-SHORTCUT FADE TRICK: Applies an alpha channel mask to fade the top and bottom edges */
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+      );
+    }
+  
+    .marquee-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      height: 100%;
+  
+      @media (max-width: 968px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+  
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+    /* --- COLUMNS & TRACKS --- */
+    .marquee-column {
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      
+      /* Hide scrollbars completely */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  
+    .marquee-track {
+      display: flex;
+      flex-direction: column;
+      /* Hardware accelerated infinite animation */
+      animation: scroll-up linear infinite;
+  
+      /* Pauses on hover so the user can read the review */
+      &:hover {
+        animation-play-state: paused;
+      }
+  
+      &.reverse {
+        animation-name: scroll-down;
+      }
+    }
+  
+    .marquee-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem; /* Space between cards */
+      padding-bottom: 1.5rem; /* Critical: Adds the exact same gap between the original and clone blocks */
+    }
+  
+    /* --- THE CARDS --- */
+    .review-card {
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      
+      /* Matches the subtle, flat shadow from the video */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      }
+  
+      .review-text {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.6;
+        color: #333333;
+        margin: 0;
+      }
+  
+      .review-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+  
+        .author {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 700;
+          font-size: 1rem;
+          color: #000000;
+        }
+  
+        .service {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: #888888;
+        }
+      }
+    }
+  
+    /* --- MATHEMATICALLY PERFECT KEYFRAMES --- */
+    /* Because the track contains two identical halves, scrolling exactly -50% creates a seamless loop */
+    
+    @keyframes scroll-up {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); } 
+    }
+  
+    @keyframes scroll-down {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
+    }
+  }

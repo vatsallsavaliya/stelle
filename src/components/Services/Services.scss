@@ -1,0 +1,338 @@
+.services-reveal-section {
+  /* THE ULTIMATE OVERRIDE */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  
+  /* THE CUBERTO CURVE */
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  
+  padding: 8rem 0; 
+  
+  /* THE NEW PREMIUM SHADE */
+  background: linear-gradient(180deg, #161616 0%, #0a0a0a 100%);
+  
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  position: relative;
+  box-sizing: border-box;
+
+  /* Slightly reduce the curve on mobile */
+  @media (max-width: 768px) {
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    padding: 6rem 0; 
+  }
+  
+  .services-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    padding: 0 5vw; 
+    width: 100%;
+    box-sizing: border-box;
+
+    .subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #888888;
+      margin-bottom: 1rem;
+    }
+
+    .title {
+      font-family: 'ivypresto-display', Didot, serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1300px;
+    
+    width: 100%;
+    padding: 0 5vw; 
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* --- REVEAL CARD MAIN STRUCTURE --- */
+  .reveal-card {
+    position: relative;
+    background-color: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    overflow: hidden;
+    height: 480px; 
+    padding: 3rem;
+    cursor: pointer;
+    
+    /* 1. Scale-Up & Glowing Shadow on Hover */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.4s ease, border-color 0.4s ease;
+
+    /* --- NEW: BACKGROUND IMAGE --- */
+    .card-bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+      transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* --- NEW: DARK OVERLAY --- */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      /* Heavy dark gradient at the bottom for text readability, subtle at the top */
+      background: linear-gradient(
+        to top, 
+        rgba(0, 0, 0, 0.95) 0%, 
+        rgba(0, 0, 0, 0.6) 40%, 
+        rgba(0, 0, 0, 0.3) 100%
+      );
+      transition: opacity 0.4s ease;
+    }
+    
+    &:hover {
+      transform: scale(1.02); 
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05), 
+                  0 0 20px rgba(255, 255, 255, 0.02);
+      
+      /* Subtle zoom on the image inside the card */
+      .card-bg-image {
+        transform: scale(1.1);
+      }
+
+      /* Darken the overlay slightly on hover to keep text crisp as it reveals */
+      .card-overlay {
+        background: linear-gradient(
+          to top, 
+          rgba(0, 0, 0, 0.95) 0%, 
+          rgba(0, 0, 0, 0.8) 60%, 
+          rgba(0, 0, 0, 0.4) 100%
+        );
+      }
+      
+      /* 2. Triggers the slide-up reveal */
+      .hidden-details {
+        max-height: 300px; 
+        opacity: 1;
+        transform: translateY(0);
+        margin-top: 1.5rem; 
+      }
+
+      /* Elevates the title slightly to make room */
+      .card-title {
+        color: #ffffff;
+      }
+    }
+  }
+
+  /* --- CONTENT STYLING --- */
+  .card-content {
+    position: relative;
+    z-index: 2; /* CRITICAL: Moved from 1 to 2 so it sits above the new dark overlay */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .card-number {
+        font-family: 'ivypresto-display', serif;
+        font-size: 3rem;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.4); /* Lightened slightly since the bg is darker now */
+      }
+
+      .icon-wrapper {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.1); /* Increased visibility against the photo */
+        padding: 12px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+      }
+    }
+
+    .card-bottom {
+      display: flex;
+      flex-direction: column;
+
+      .card-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem;
+        font-weight: 500;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.95);
+        transition: color 0.4s ease;
+      }
+
+      /* --- THE HIDDEN REVEAL LOGIC --- */
+      .hidden-details {
+        max-height: 0; 
+        opacity: 0;    
+        transform: translateY(20px); 
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+        @media (max-width: 768px) {
+          max-height: 300px;
+          opacity: 1;
+          transform: translateY(0);
+          margin-top: 1.5rem;
+        }
+
+        .card-desc {
+          font-family: 'ivypresto-display', serif;
+          font-size: 1.05rem;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.85); /* Boosted contrast */
+          margin-bottom: 1.5rem;
+        }
+
+        .benefits-list {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 2rem 0;
+
+          li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #ffffff; /* Boosted contrast */
+            margin-bottom: 0.8rem;
+
+            svg {
+              color: #ffffff;
+              flex-shrink: 0;
+            }
+          }
+        }
+
+        .book-now-btn {
+          width: 100%;
+          padding: 1rem;
+          background: #ffffff;
+          color: #000000;
+          border: none;
+          border-radius: 50px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          cursor: pointer;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: #dddddd;
+          }
+        }
+      }
+    }
+  }
+
+  /* --- SERVICES FOOTER & FILL BUTTON --- */
+  .services-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+    position: relative;
+    z-index: 2; 
+
+    .explore-fill-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1.2rem 3rem;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      cursor: pointer;
+      overflow: hidden; 
+      transition: border-color 0.4s ease;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        transform: scaleY(0); 
+        transform-origin: bottom; 
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 0;
+      }
+
+      .btn-text, .btn-icon {
+        position: relative;
+        z-index: 1; 
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #ffffff;
+        transition: color 0.4s ease;
+      }
+
+      .btn-icon {
+        display: flex;
+        align-items: center;
+        
+        svg {
+          transition: transform 0.4s ease;
+        }
+      }
+
+      &:hover {
+        border-color: #ffffff;
+
+        &::before {
+          transform: scaleY(1); 
+        }
+
+        .btn-text, .btn-icon {
+          color: #000000; 
+        }
+
+        .btn-icon svg {
+          transform: translateX(5px); 
+        }
+      }
+    }
+  }
+}

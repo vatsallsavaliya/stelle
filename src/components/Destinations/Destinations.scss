@@ -1,0 +1,193 @@
+.destinations-section {
+    padding: 5rem 2rem;
+    background-color: #fcfcfc; /* Slightly off-white for depth */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    /* --- HEADER TYPOGRAPHY --- */
+    .destinations-header {
+      text-align: center;
+      margin-bottom: 4rem;
+  
+      .subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: #888888;
+        margin-bottom: 1rem;
+      }
+  
+      .title {
+        font-family: 'ivypresto-display', Didot, serif;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 500;
+        color: #111111;
+      }
+    }
+  
+    /* --- BENTO GRID LAYOUT --- */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 300px);
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1400px;
+  
+      /* Responsive Breakdown */
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+  
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+    /* --- INDIVIDUAL CARD STYLING --- */
+    .bento-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      
+      /* Assigning Grid Areas based on class */
+      &.feature-card {
+        grid-column: span 2;
+        grid-row: span 2;
+        
+        @media (max-width: 1024px) { grid-column: span 2; grid-row: span 1; height: 400px; }
+        @media (max-width: 600px) { grid-column: span 1; }
+      }
+      
+      &.wide-card {
+        grid-column: span 2;
+        
+        @media (max-width: 600px) { grid-column: span 1; height: 300px; }
+      }
+      
+      &.square-card {
+        grid-column: span 1;
+        @media (max-width: 600px) { height: 300px; }
+      }
+  
+      /* Background Image */
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+  
+      /* --- THE INTERACTIVE HOVER OVERLAY --- */
+      .card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+        display: flex;
+        align-items: flex-end;
+        padding: 2.5rem;
+        transition: background 0.4s ease;
+  
+        .card-content {
+          color: #ffffff;
+          transform: translateY(20px); /* Pushed down initially */
+          transition: transform 0.4s ease;
+  
+          h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+          }
+  
+          p {
+            font-family: 'ivypresto-display', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0; /* Hidden initially */
+            transition: opacity 0.4s ease;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+  
+      /* Hover Animations */
+      &:hover {
+        img {
+          transform: scale(1.08); /* Slow, premium zoom */
+        }
+  
+        .card-overlay {
+          background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%);
+          
+          .card-content {
+            transform: translateY(0); /* Text slides up */
+            
+            p, .explore-btn {
+              opacity: 1; /* Fades in */
+            }
+          }
+        }
+      }
+    }
+    /* --- NEW GLOBAL ACTION BUTTON --- */
+  .destinations-action {
+    margin-top: 4rem; /* Gives breathing room between the grid and the button */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .view-all-btn {
+      position: relative;
+      background: transparent;
+      border: 1px solid #111111; /* Dark border to match the light background */
+      border-radius: 50px;
+      padding: 1rem 3rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s ease;
+
+      span {
+        position: relative;
+        z-index: 2;
+        color: #111111;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        transition: color 0.4s ease;
+      }
+
+      /* Liquid fill effect matching the Hero, but in black */
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #111111;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1;
+      }
+
+      &:hover {
+        span {
+          color: #ffffff; /* Text flips to white */
+        }
+        &::before {
+          transform: translateY(0); /* Black background slides up */
+        }
+      }
+    }
+  }
+  }

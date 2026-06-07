@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Hero.scss';
 
 const Hero = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Triggers the text animation smoothly after the component mounts
+    const timer = setTimeout(() => setIsLoaded(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="hero">
       {/* The Cinematic Background */}
@@ -19,15 +27,23 @@ const Hero = () => {
       </div>
 
       {/* Your Existing Content */}
-      <div className="hero-content">
+      <div className={`hero-content ${isLoaded ? 'is-visible' : ''}`}>
         <h1>
-          <span className="slim-serif">Explore the </span>
-          <span className="bold-sans">extraordinary</span>
+          {/* Wrapped your existing classes inside the animation masks */}
+          <span className="word-mask">
+            <span className="word slim-serif">Explore the </span>
+          </span>
+          <span className="word-mask">
+            <span className="word bold-sans">extraordinary</span>
+          </span>
         </h1>
         
-        <button className="cta-button">
-          <span>Start your journey</span>
-        </button>
+        {/* Wrapped the button so its hover effects stay perfectly intact */}
+        <div className="hero-actions">
+          <button className="cta-button">
+            <span>Start your journey</span>
+          </button>
+        </div>
       </div>
     </section>
   );
